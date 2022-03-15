@@ -61,7 +61,7 @@ class Character extends MovableObject {
             }
 
             if (this.world.keyboard.UP) {
-                this.speedY = 20;
+                this.jump();
             }
 
             //POSITION VON PEPE IN KAMERAAUSSCHNITT
@@ -86,7 +86,7 @@ class Character extends MovableObject {
     }
 
 
-    jump() {
 
-    }
+
+
 }
