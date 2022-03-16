@@ -17,9 +17,9 @@ class MovableObject {
 
     applyGravity() {
         setInterval(() => {
-            if(this.isAboveGround() || this.speedY > 0) {
-            this.y -= this.speedY;
-            this.speedY -= this.acceleration;
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
             }
         }, 1000 / 25);
     }
@@ -43,11 +43,13 @@ class MovableObject {
 
 
     drawFrame(ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = '3';
-        ctx.strokeStyle = 'white';
-        ctx.rect(this.x, this.y, this.width, this.height);        
-        ctx.stroke();        
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'white';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
     }
 
 
@@ -88,7 +90,11 @@ class MovableObject {
     }
 
 
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+        this.x < mo.x;
+    }
 
 
-    
+
 }
