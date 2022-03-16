@@ -24,7 +24,6 @@ class Coin extends MovableObject {
     animate() {
 
         setInterval(() => {
-            //MODULO, DAMIT IMAGES_WALKING WIEDER VON 0 BEGINNEN // I = 0,1,2,3,4,5,  0,1,2,3,4,5,  0...
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
     }

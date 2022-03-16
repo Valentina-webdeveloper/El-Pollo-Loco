@@ -8,10 +8,9 @@ class MovableObject {
     imageCache = {};
     currentImage = 0;
     speed = 0.1;
-    //BILD STANDARTMÄSSIG NICHT SPIEGELN
-    otherDirection = false;
-    speedY = 0;             //RUNTERFALLEN
-    acceleration = 1;       //BESCHLEUNIGUNG RUNTERFALLEN 
+    otherDirection = false; //Bild standartmäßig nicht spiegeln
+    speedY = 0;             //runterfallen
+    acceleration = 1;       //Beschleunigung von runderfallen 
 
     //---------------------------------- FUNKTIONEN ----------------------------------
 
@@ -31,14 +30,28 @@ class MovableObject {
     }
 
 
-    //loadImage('img/test.png');
+    //loadImage('img/test.png')
     loadImage(path) {
-        this.img = new Image(); // THIS.IMG = DOCUMENT.GETELEMENTBYID('IMAGE') <IMG ID="IMAGE" SRC>
+        this.img = new Image(); //this.img = document.getelementbyid('image') <img id="image" src>
         this.img.src = path;
     }
 
 
-    //IMAGE CACHE
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+
+    drawFrame(ctx) {
+        ctx.beginPath();
+        ctx.lineWidth = '3';
+        ctx.strokeStyle = 'white';
+        ctx.rect(this.x, this.y, this.width, this.height);        
+        ctx.stroke();        
+    }
+
+
+    //image cache
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -49,7 +62,7 @@ class MovableObject {
 
 
     playAnimation(images) {
-        //MODULO, DAMIT IMAGES_WALKING WIEDER VON 0 BEGINNEN // I = 0,1,2,3,4,5,  0,1,2,3,4,5,  0...
+        //modulo, damit images_walking wieder von 0 beginnen // i = 0,1,2,3,4,5,0,1,2...
         let i = this.currentImage % this.IMAGES_WALKING.length;
         let path = images[i];
         this.img = this.imageCache[path];
@@ -62,7 +75,7 @@ class MovableObject {
     }
 
 
-    //CHICKEN & CLOUD BEWEGEN
+    //chicken & cloud bewegen
     moveLeft() {
         setInterval(() => {
             this.x -= this.speed;

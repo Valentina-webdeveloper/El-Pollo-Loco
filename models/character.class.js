@@ -22,10 +22,10 @@ class Character extends MovableObject {
         'img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/J-40.png',
     ];
 
-    //MIT DIESER VARIABLE KÖNNEN WIR AUF VARIABLE KEYBOARD IN UNSERER WORLD ZUGREIFEN
+    //mit dieser Variable können wir auf keybord in unserer world zugreifen
     world;
 
-    //CHARACTER BEWEGEN, SPEED WIRD ÜBERSCHRIEBEN
+    //Character bewegen, speed überschrieben
     speed = 8;
 
     //---------------------------------- FUNKTIONEN ----------------------------------
@@ -55,7 +55,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.x -= this.speed;
 
-                //CHARACTER BILD WIRD GESPIEGELT
+                //spiegeln
                 this.otherDirection = true;
                 steps_sound.play();
             }
@@ -64,21 +64,21 @@ class Character extends MovableObject {
                 this.jump();
             }
 
-            //POSITION VON PEPE IN KAMERAAUSSCHNITT
+            //Position in Kamera-Ausschnitt
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
 
-        //KEYBOARD
+        //keyboard
         setInterval(() => {
 
             if (this.isAboveGround()) {
-                //JUMP ANIMATION
+                //jump animation
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
 
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    //WALK ANIMATION
+                    //walk animation
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }

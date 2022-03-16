@@ -1,4 +1,3 @@
-//CHICKEN HAT ALLE EIGENSCHAFTEN VON MOVABLEOBJECT
 class Chicken extends MovableObject {
 
     y = 395;
@@ -20,7 +19,7 @@ class Chicken extends MovableObject {
 
         this.x = 200 + Math.random() * 500;
 
-        //UNTERSCHIEDLICHE GESCHWINDIGKEIT DER CHICKEN, MATH.random() IST EINE ZAHL ZWISCHEN 0 UND 1
+        //unterschiedliche Geschwindigkeiten, math.random() Zahl zw. 0 u. 1
         this.speed = 0.25 + Math.random() * 0.4;
 
         this.animate();
@@ -32,8 +31,11 @@ class Chicken extends MovableObject {
         this.moveLeft();
 
         setInterval(() => {
-            //MODULO, DAMIT IMAGES_WALKING WIEDER VON 0 BEGINNEN // I = 0,1,2,3,4,5,  0,1,2,3,4,5,  0...
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
     }
+
+
+
+    
 }

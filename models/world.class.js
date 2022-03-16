@@ -1,6 +1,6 @@
 class World {
 
-    character = new Character();        //ANDERE OBJEKTE IN LEVEL1 ALS "NEW" DEFINIERT
+    character = new Character(); //andere Objekte "new" in Level1
     level = level1;
     canvas;
     ctx;
@@ -19,32 +19,32 @@ class World {
     }
 
 
-    //KEYBOARD OBJEKT FERTIG STELLEN
+    //Keyboard Objekt fertigstellen
     setWorld() {
         this.character.world = this;
     }
 
 
     draw() {
-        //CANVAS WIRD ERST GELÖSCHT, DAMIT BILD NICHT MEHRFACH AN VERSCHIEDENEN KOORDINATEN ERSCHEINT
+        //Canvas erst gelöscht, damit Bild einmalig angezeigt wird
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        //KAMERA WIRD VERSCHOBEN, Y ACHSE UM 0 VERSCHIEBEN
+        //Camera x Achse um 0 verschieben
         this.ctx.translate(this.camera_x, 0);
 
-        //CHARACTER, CHICKENS, CLOUDS, BACKGROUNDOBJECTS WERDEN ANGEZEIGT
+        //anzeigen
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.coins);
 
-        //NICHT DER BILDAUSSCHNITT WIRD ZURÜCK GESCHOBEN, SONDERN DER CONTEXT, DER ZEICHNET
+        //zeichnenden Context verschieben
         this.ctx.translate(-this.camera_x, 0);
 
-        //DAMIT IMAGES SOFORT ANGEZEIGT WERDEN //DRAW() WIRD IMMER WIEDER AUFGERUFEN
+        //Images sofort anzeigen //draw() immer wirder aufrufen
         let self = this;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             self.draw();
         });
     }
@@ -57,28 +57,32 @@ class World {
     }
 
 
-    //BILD WIRD EINGEFÜGT
+    //Bild einfügen und spiegeln
     addToMap(mo) {
-
-        //BILD SPIEGELN
         if (mo.otherDirection) {
-
-            //AKTUELLER STATUS VON CONTEXT WIRD GESPEICHERT
-            this.ctx.save();
-            //WIRD UM DIE BREITE VOM BILD IN DIE ANDERE RICHTUNG GESCHOBEN, ALSO UMGEDREHT
-            this.ctx.translate(mo.width, 0);
-            //BILD WIRD AN Y ACHSE GESPIEGELT WIEDERGEGEBEN
-            this.ctx.scale(-1, 1);
-            //X ACHSE BEGINNT VON 0 NACH LINKS (IN CANVAS NICHT MEHR ZUSEHEN, DAHER * -1)
-            mo.x = mo.x * -1;
+            this.flipImage(mo);
         }
 
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        //Funktionen in movable object
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
 
-        //WENN CONTEXT VERÄNDERT WURDE, WIRD ÄNDERUNG RÜCKGÄNGIG GEMACHT
+        //wenn Context verändert, dann Änderung rückgängig
         if (mo.otherDirection) {
             mo.x = mo.x * -1;
             this.ctx.restore();
         }
     }
+
+
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);  //Bild an Y Achse gespiegelt wiedergegeben// x Achse nach links
+        mo.x = mo.x * -1;
+
+    }
+
+
+
 }
