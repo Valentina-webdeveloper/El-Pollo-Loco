@@ -22,10 +22,27 @@ class Character extends MovableObject {
         'img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/J-40.png',
     ];
 
-    //mit dieser Variable können wir auf keybord in unserer world zugreifen
+    IMAGES_DEAD = [
+        'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-51.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-52.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-53.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-54.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-55.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-56.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-57.png',
+    ];
+
+    IMAGES_HURT = [
+        'img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-41.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-42.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-43.png',
+    ];
+
+
+    //use variable in world class
     world;
 
-    //Character bewegen, speed überschrieben
+    //move character, overwritespeed
     speed = 8;
 
     //---------------------------------- FUNKTIONEN ----------------------------------
@@ -35,6 +52,8 @@ class Character extends MovableObject {
         super().loadImage('img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();
     }
@@ -49,13 +68,14 @@ class Character extends MovableObject {
                 this.otherDirection = false;
                 steps_sound.play();
             }
+
             if (this.world.keyboard.RIGHT == false) {
                 steps_sound.pause();
             }
+
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.x -= this.speed;
-
-                //spiegeln
+                //reflect
                 this.otherDirection = true;
                 steps_sound.play();
             }
@@ -64,26 +84,34 @@ class Character extends MovableObject {
                 this.jump();
             }
 
-            //Position in Kamera-Ausschnitt
+            //position of camera
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
 
         //keyboard
         setInterval(() => {
+            if(this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
 
-            if (this.isAboveGround()) {
+            }else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+
+            }else if (this.isAboveGround()) {
                 //jump animation
                 this.playAnimation(this.IMAGES_JUMPING);
+            
             } else {
-
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     //walk animation
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
         }, 100);
+    
     }
+
+
 
 
 

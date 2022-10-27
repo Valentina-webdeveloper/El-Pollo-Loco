@@ -1,16 +1,10 @@
-class MovableObject {
+class MovableObject extends DrawableObject {
 
-    x = 50;
-    y = 250;
-    img;
-    height = 200;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
     speed = 0.1;
-    otherDirection = false; //Bild standartmäßig nicht spiegeln
-    speedY = 0;             //runterfallen
-    acceleration = 1;       //Beschleunigung von runderfallen 
+    otherDirection = false; //default no reflection of image
+    speedY = 0;             //fall down
+    acceleration = 1;       //exceleration of falling down 
+    lastHit = 0;
 
     //---------------------------------- FUNKTIONEN ----------------------------------
 
@@ -30,18 +24,6 @@ class MovableObject {
     }
 
 
-    //loadImage('img/test.png')
-    loadImage(path) {
-        this.img = new Image(); //this.img = document.getelementbyid('image') <img id="image" src>
-        this.img.src = path;
-    }
-
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken) {
             ctx.beginPath();
@@ -53,19 +35,9 @@ class MovableObject {
     }
 
 
-    //image cache
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
-    }
-
-
     playAnimation(images) {
-        //modulo, damit images_walking wieder von 0 beginnen // i = 0,1,2,3,4,5,0,1,2...
-        let i = this.currentImage % this.IMAGES_WALKING.length;
+        //modulo, images_walking starts from 0 again // i = 0,1,2,3,4,5,0,1,2...
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
@@ -77,7 +49,7 @@ class MovableObject {
     }
 
 
-    //chicken & cloud bewegen
+    //move chicken & cloud
     moveLeft() {
         setInterval(() => {
             this.x -= this.speed;
@@ -90,9 +62,32 @@ class MovableObject {
     }
 
 
+    //character.isColliding(chicken)
     isColliding(mo) {
         return this.x + this.width > mo.x &&
         this.x < mo.x;
+    }
+
+
+    hit() {
+        this.energy -= 5;
+        if(this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;       //difference in ms from 01.01.1970
+        timepassed = timepassed / 1000      //difference in seconds
+        return timepassed < 0.8;
+    }
+
+
+    isDead() {
+        return this.energy == 0;
     }
 
 

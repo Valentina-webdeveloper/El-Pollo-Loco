@@ -30,6 +30,7 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
+                    this.character.hit();
                     console.log('is colliding with character', enemy);
                 }
             });
@@ -49,7 +50,7 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.coins)
 
         //zeichnenden Context verschieben
         this.ctx.translate(-this.camera_x, 0);
