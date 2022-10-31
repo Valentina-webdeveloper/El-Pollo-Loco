@@ -1,13 +1,12 @@
 class World {
 
-    character = new Character(); //andere Objekte "new" in Level1
+    character = new Character();        //"new" objects in Level1
     level = level1;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
-
-    //---------------------------------- FUNKTIONEN ----------------------------------
+    statusbar = new Statusbar();
 
 
     constructor(canvas, keyboard) {
@@ -26,12 +25,13 @@ class World {
     }
 
 
+    //collision with enemy and changing live statusbar
     checkCollisions() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
-                    console.log('is colliding with character', enemy);
+                    this.statusbar.setPercentage(this.character.energy);
                 }
             });
         }, 200);
@@ -44,9 +44,12 @@ class World {
 
         //Camera x Achse um 0 verschieben
         this.ctx.translate(this.camera_x, 0);
-
-        //anzeigen
         this.addObjectsToMap(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.camera_x, 0);      //back for statusbar
+        this.addToMap(this.statusbar);
+        this.ctx.translate(this.camera_x, 0);       //forward for staturbar
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
@@ -76,7 +79,6 @@ class World {
             this.flipImage(mo);
         }
 
-        //Funktionen in movable object
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
 
@@ -89,7 +91,7 @@ class World {
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
-        this.ctx.scale(-1, 1);  //Bild an Y Achse gespiegelt wiedergegeben// x Achse nach links
+        this.ctx.scale(-1, 1);          //Bild an Y Achse gespiegelt wiedergegeben// x Achse nach links
         mo.x = mo.x * -1;
 
     }
@@ -99,6 +101,9 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+
+
+
 
 
 

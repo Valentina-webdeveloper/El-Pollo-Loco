@@ -9,8 +9,6 @@ class Coin extends MovableObject {
     ];
 
 
-    //---------------------------------- FUNKTIONEN ----------------------------------
-
     constructor() {
         super().loadImage('img/8.Coin/Moneda1.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -27,4 +25,11 @@ class Coin extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
     }
+
+
+
+
+
+
+    
 }

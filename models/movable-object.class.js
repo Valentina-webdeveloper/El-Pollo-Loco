@@ -3,10 +3,9 @@ class MovableObject extends DrawableObject {
     speed = 0.1;
     otherDirection = false; //default no reflection of image
     speedY = 0;             //fall down
-    acceleration = 1;       //exceleration of falling down 
+    acceleration = 2;       //exceleration of falling down 
+    energy = 100;
     lastHit = 0;
-
-    //---------------------------------- FUNKTIONEN ----------------------------------
 
 
     applyGravity() {
@@ -24,17 +23,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
-            ctx.beginPath();
-            ctx.lineWidth = '3';
-            ctx.strokeStyle = 'white';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
-
-
     playAnimation(images) {
         //modulo, images_walking starts from 0 again // i = 0,1,2,3,4,5,0,1,2...
         let i = this.currentImage % images.length;
@@ -45,33 +33,32 @@ class MovableObject extends DrawableObject {
 
 
     moveRight() {
-        console.log('moving right');
+        this.x += this.speed;
+        this.otherDirection = false;
     }
 
 
-    //move chicken & cloud
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+        this.x -= this.speed;
+        this.otherDirection = true;
     }
 
 
     jump() {
-        this.speedY = 20;
+        this.speedY = 30;
     }
 
 
     //character.isColliding(chicken)
     isColliding(mo) {
         return this.x + this.width > mo.x &&
-        this.x < mo.x;
+            this.x < mo.x;
     }
 
 
     hit() {
         this.energy -= 5;
-        if(this.energy < 0) {
+        if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();

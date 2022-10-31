@@ -19,10 +19,11 @@ class Character extends MovableObject {
         'img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/J-37.png',
         'img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/J-38.png',
         'img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/J-39.png',
-        'img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/J-40.png',
+        'img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/J-40.png'
     ];
 
     IMAGES_DEAD = [
+
         'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-51.png',
         'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-52.png',
         'img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-53.png',
@@ -38,14 +39,10 @@ class Character extends MovableObject {
         'img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-43.png',
     ];
 
-
     //use variable in world class
     world;
-
-    //move character, overwritespeed
     speed = 8;
-
-    //---------------------------------- FUNKTIONEN ----------------------------------
+    steps_sound = new Audio('running.mp3');
 
 
     constructor() {
@@ -60,36 +57,25 @@ class Character extends MovableObject {
 
 
     animate() {
-        const steps_sound = new Audio('running.mp3');
-
         setInterval(() => {
+            this.steps_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.x += this.speed;
-                this.otherDirection = false;
-                steps_sound.play();
-            }
-
-            if (this.world.keyboard.RIGHT == false) {
-                steps_sound.pause();
+                this.moveRight();
+                this.steps_sound.play();
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
-                this.x -= this.speed;
-                //reflect
-                this.otherDirection = true;
-                steps_sound.play();
+                this.moveLeft();
+                this.steps_sound.play();
             }
 
-            if (this.world.keyboard.UP) {
+            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
 
-            //position of camera
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-
-        //keyboard
         setInterval(() => {
             if(this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
@@ -110,6 +96,7 @@ class Character extends MovableObject {
         }, 100);
     
     }
+
 
 
 

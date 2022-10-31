@@ -4,13 +4,11 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
     x = 50;
-    y = 250;
+    y = 200;
     height = 200;
     width = 100;
 
 
-
-    
     loadImage(path) {
         this.img = new Image(); //this.img = document.getelementbyid('image') <img id="image" src>
         this.img.src = path;
@@ -35,7 +33,19 @@ class DrawableObject {
     }
 
 
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'white';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
 
+
+
+    
 
 
 

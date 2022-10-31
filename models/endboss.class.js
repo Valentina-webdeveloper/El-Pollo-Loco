@@ -2,6 +2,7 @@ class Endboss extends MovableObject {
 
     width = 190;
     y = 260;
+    
     IMAGES_WALKING = [
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G5.png',
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G6.png',
@@ -12,8 +13,6 @@ class Endboss extends MovableObject {
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G11.png',
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G12.png'
     ];
-
-    //---------------------------------- FUNKTIONEN ----------------------------------
 
 
     constructor() {
@@ -29,4 +28,11 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
     }
+
+
+
+
+
+
+
 }

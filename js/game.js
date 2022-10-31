@@ -1,9 +1,8 @@
-let canvas;   //Spielfeld
-let world;   //alles im Spielfeld
+let canvas;  
+let world;   
 let keyboard = new Keyboard();
 
 
-//HTML ONLOAD="INIT()"
 function init() {
 
     canvas = document.getElementById('canvas');
@@ -11,7 +10,7 @@ function init() {
 }
 
 
-//KEYBOARDOBJEKT FERTIGSTELLEN, TASTEN WERDEN GEDRÜCKT
+//keyboard object, Tasten werden gedrückt
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -33,7 +32,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 
-//KEYBOARDOBJEKT FERTIGSTELLEN, TASTEN WERDEN LOSGELASSEN
+//keyboard object, Tasten werden losgelassen
 window.addEventListener("keyup", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = false;

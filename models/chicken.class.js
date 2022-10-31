@@ -1,6 +1,6 @@
 class Chicken extends MovableObject {
 
-    y = 395;
+    y = 400;
     height = 50;
     width = 40;
 
@@ -10,25 +10,23 @@ class Chicken extends MovableObject {
         'img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/3.Ga_paso izquierdo.png'
     ];
 
-    //---------------------------------- FUNKTIONEN ----------------------------------
-
     
     constructor() {
         super().loadImage('img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/1.Ga_paso_derecho.png');
         this.loadImages(this.IMAGES_WALKING);
 
-        this.x = 200 + Math.random() * 500;
-
-        //unterschiedliche Geschwindigkeiten, math.random() Zahl zw. 0 u. 1
-        this.speed = 0.25 + Math.random() * 0.4;
+        this.x = 100 + Math.random() * 1200;
+        this.speed = 0.15 + Math.random() * 0.5;
 
         this.animate();
     }
 
 
     animate() {
-
-        this.moveLeft();
+        setInterval(() => {
+            this.moveLeft();
+            this.otherDirection = false;
+        }, 1000 / 60);
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
@@ -37,5 +35,9 @@ class Chicken extends MovableObject {
 
 
 
+
+
+
+    
     
 }
